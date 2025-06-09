@@ -48,10 +48,14 @@ public class TrackRacesService : ITrackRacesService
             }
             else
             {
-                if (existingParticipation.FinishTimeInSeconds < participation.FinishTimeInSeconds)
-                {
-                    existingParticipation.FinishTimeInSeconds = participation.FinishTimeInSeconds;
-                }
+                if (existingParticipation.FinishTimeInSeconds <= participation.FinishTimeInSeconds) continue;
+                existingParticipation.FinishTimeInSeconds = participation.FinishTimeInSeconds;
+                existingParticipation.Position = participation.Position;
+            }
+
+            if (trackRace.BestTimeInSeconds > participation.FinishTimeInSeconds)
+            {
+                trackRace.BestTimeInSeconds = participation.FinishTimeInSeconds;
             }
         }
 
