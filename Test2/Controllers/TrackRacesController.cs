@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Test2.DTOs;
+using Test2.Exceptions;
 using Test2.Services;
 
 namespace Test2.Controllers;
@@ -23,6 +24,11 @@ public class TrackRacesController : ControllerBase
         try
         {
             await _trackRacesService.AddNewRacersParticipations(dto, cancellationToken);
+            return Created();
+        }
+        catch (Exception ex) when (ex is NoSuchTrackException or NoSuchRaceException or NoSuchTrackRaceException)
+        {
+            return NotFound(new { error = ex.Message });
         }
         catch (Exception ex)
         {
