@@ -12,7 +12,11 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 );
 
 builder.Services.AddScoped<IRacersService, RacersService>();
+builder.Services.AddScoped<ITrackRacesService, TrackRacesService>();
 builder.Services.AddScoped<IRacersRepository, RacersRepository>();
+builder.Services.AddScoped<ITrackRacesRepository, TrackRacesRepository>();
+builder.Services.AddScoped<ITracksRepository, TracksRepository>();
+builder.Services.AddScoped<IRacesRepository, RacesRepository>();
 
 var app = builder.Build();
 

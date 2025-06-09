@@ -18,7 +18,7 @@ public class RacersService : IRacersService
     {
         var racerInfo = await _racersRepository.GetById(racerId, cancellationToken);
         if (racerInfo == null)
-            throw new NoSuchRacerException($"There's no racer with id '{racerId}'");
+            throw new NoSuchRacerException($"There's no racer with id '{racerId}'.");
 
         return new RacerParticipationsResponseDTO
         {
