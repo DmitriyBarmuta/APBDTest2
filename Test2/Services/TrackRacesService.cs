@@ -35,16 +35,17 @@ public class TrackRacesService : ITrackRacesService
         
         foreach (var participation in dto.Participations)
         {
-            var existingParticipation = trackRace.Participations.FirstOrDefault(p => p.RacerId == participation.RacerId);
+            var existingParticipation = await _trackRacesRepository.GetParticipationAsync(trackRace.TrackRaceId, participation.RacerId, cancellationToken);
             if (existingParticipation == null)
             {
-                trackRace.Participations.Add(new RaceParticipation
+                var newParticipation = new RaceParticipation
                 {
                     TrackRaceId = trackRace.TrackRaceId,
                     RacerId = participation.RacerId,
                     FinishTimeInSeconds = participation.FinishTimeInSeconds,
                     Position = participation.Position
-                });
+                };
+                await _trackRacesRepository.AddParticipationAsync(newParticipation, cancellationToken);
             }
             else
             {

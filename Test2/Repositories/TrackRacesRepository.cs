@@ -22,4 +22,15 @@ public class TrackRacesRepository : ITrackRacesRepository
     {
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task AddParticipationAsync(RaceParticipation newParticipation, CancellationToken cancellationToken)
+    {
+        await _context.RaceParticipations.AddAsync(newParticipation, cancellationToken);
+    }
+
+    public async Task<RaceParticipation?> GetParticipationAsync(int trackRaceId, int racerId, CancellationToken cancellationToken)
+    {
+        return await _context.RaceParticipations
+            .FirstOrDefaultAsync(rp => rp.TrackRaceId == trackRaceId && rp.RacerId == racerId, cancellationToken);
+    }
 }
